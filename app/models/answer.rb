@@ -1,3 +1,5 @@
 class Answer < ApplicationRecord
-  validates :owner, :email, presence: true
+  belongs_to :question, class_name: 'Question', foreign_key: :question_id
+
+  validates :owner, :email, :body, presence: true
 end
