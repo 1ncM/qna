@@ -16,8 +16,6 @@ ActiveRecord::Schema.define(version: 20160813131957) do
   enable_extension "plpgsql"
 
   create_table "answers", force: :cascade do |t|
-    t.text     "owner"
-    t.text     "email"
     t.text     "body"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
