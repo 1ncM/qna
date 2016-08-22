@@ -17,18 +17,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    before { get :show, params: {id: question} }
-
-    it 'assigns the requested question to @question' do
-      expect(assigns(:question)).to eq question
-    end
-
-    it 'renders show view' do
-      expect(response).to render_template :show
-    end
-  end
-
   describe 'GET #new' do 
     before { get :new }
 
@@ -100,10 +88,23 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 =end
+
+  describe 'GET #show' do
+    before { get :show, params: {id: question} }
+
+    it 'assigns the requested question to @question' do
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'renders show view' do
+      expect(response).to render_template :show
+    end
+  end
+
   describe 'POST #create' do
     context 'with valid question' do
       it 'save new question in the database' do
-        expect { post :create, params: { question: attributes_for(:question)} }.to change(Question,:count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question,:count).by(1)
       end
 
       it 'redirected show view' do
