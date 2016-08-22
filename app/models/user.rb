@@ -1,3 +1,3 @@
 class User < ApplicationRecord
-  has_many :questions
+  #has_many :questions
 end
