@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
-=begin
+
   describe 'GET #index' do
     let(:questions) { create_list(:question, 2) }
 
@@ -87,7 +87,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(response).to redirect_to questions_path
     end
   end
-=end
 
   describe 'GET #show' do
     before { get :show, params: {id: question} }
