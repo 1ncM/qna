@@ -1,2 +1,16 @@
 p= "Your question successfully created."
 
+= @question.title
+
+.answers
+  = render @question.answers
+
+- if user_signed_in?
+  h1 Add your answer:
+  p = form_for [@question, @question.answers.create], remote: true do |f|
+    = f.label 'Body'
+    = f.text_area(:body, cols: 80, rows: 7)
+    p
+    = f.submit "Post Your Answer"
+- else
+  h4 You need to login to answer the question
