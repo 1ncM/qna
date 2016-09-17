@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'write answer for question', %{
+feature 'Write answer for question', %{
   In order to help solve the problem
   As an authenticated user
   I want to be able to write answer for question
