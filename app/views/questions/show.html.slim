@@ -6,7 +6,8 @@
 .answers
   = render @question.answers
 
-- if user_signed_in?
+- if user_signed_in? && current_user.author_of?(@question)
+  p = link_to 'Delete question', @question, :method => :delete, :data => {:confirm => 'This will delete your question. Are you sure?'}
   h1 Add your answer:
   p = form_for [@question, @question.answers.create], remote: true do |f|
     = f.label 'Body'
