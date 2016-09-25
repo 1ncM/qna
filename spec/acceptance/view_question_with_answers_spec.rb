@@ -10,7 +10,6 @@ feature 'View question and answers', %q{
   scenario 'Any user can see question view with list of answers' do
     answer1, answer2 = create_list(:answer, 2, question: question)
     visit question_path(question)
-    save_and_open_page
     expect(page).to have_content question.title
     expect(page).to have_content question.body
     expect(page).to have_content answer1.body
