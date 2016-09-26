@@ -1,7 +1,11 @@
 FactoryGirl.define do
+  sequence :title do |n|
+    "How do you spell number #{n} ?"
+  end
+
   factory :question do
-    title "MyString"
     body "MyText"
+    title
     user
   end
 

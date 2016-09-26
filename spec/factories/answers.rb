@@ -1,6 +1,10 @@
 FactoryGirl.define do
+  sequence :body do |n|
+    "The answer on your question is somewhere else. Did you mean the number #{n}?"
+  end
+
   factory :answer do
-    body "MyText"
+    body
     question
     user
   end

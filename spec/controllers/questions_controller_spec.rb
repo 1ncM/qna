@@ -65,25 +65,31 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'invalid attributes' do
-      before { patch :update, params: { id: question, question: { title: 'new title', body: nil} } }
       
       it 'does not change question attributes' do
+        title = question.title
+        body = question.body
+        patch :update, params: { id: question, question: { title: 'new title', body: nil} }
         question.reload
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq title
+        expect(question.body).to eq body
       end
 
       it 're-render edit view' do
+        patch :update, params: { id: question, question: { title: 'new title', body: nil} }
         expect(response).to render_template :edit
       end
     end
   end
 
   describe 'DELETE #destroy' do
-    sign_in_user
+    before do
+      author = create(:user)
+      sign_in(author)
+      @question = create(:question, user: author)
+    end
     it 'delete question' do
-      question
-      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      expect { delete :destroy, params: { id: @question } }.to change(Question, :count).by(-1)
     end
 
     it 'redirect_to index view' do
