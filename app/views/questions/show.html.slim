@@ -6,14 +6,14 @@ p
 = @question.body
 
 - if user_signed_in? && current_user.author_of?(@question)
-  p = link_to 'Delete question', @question, :method => :delete, :data => {:confirm => 'This will delete your question. Are you sure?'}
+  p = link_to 'Delete question', @question, method: :delete, data: {:confirm => 'This will delete your question. Are you sure?'}
 
 .answers
   = render @question.answers
 
 - if user_signed_in?
   h1 Add your answer:
-  p = form_for [@question, @question.answers.create], remote: true do |f|
+  p = form_for [@question, Answer.new], remote: true do |f|
     = f.label 'Body'
     = f.text_area(:body, cols: 80, rows: 7)
     p

@@ -19,4 +19,9 @@ feature 'Write answer for question', %{
     end
   end
 
+  scenario 'Non-authenticated user can not create answer on the question' do
+    visit question_path(question)
+    expect(page).to_not have_link 'Post Your Answer'
+  end
+
 end

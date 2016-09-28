@@ -6,7 +6,7 @@ feature 'Delete answer', %q{
   I want to be able to delete my answer
 } do
 
-  given!(:user) { create(:user) }
+  let!(:user) { create(:user) }
   before(:each) do
     sign_in(user)
     @question = create(:question, user: user)

@@ -83,18 +83,36 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    before do
-      author = create(:user)
-      sign_in(author)
-      @question = create(:question, user: author)
-    end
-    it 'delete question' do
-      expect { delete :destroy, params: { id: @question } }.to change(Question, :count).by(-1)
+        context 'author of question' do
+        before do
+          author = create(:user)
+          sign_in(author)
+          @question = create(:question, user: author)
+        end
+        it 'delete question' do
+          expect { delete :destroy, params: {id: @question} }.to change(Question, :count).by(-1)
+        end
+        it 'redirects to questions view' do
+          delete :destroy, params: { id: @question }
+          expect(response).to redirect_to questions_path
+        end
     end
 
-    it 'redirect_to index view' do
-      delete :destroy, params: { id: question }
-      expect(response).to redirect_to questions_path
+    context 'not an author of the question tries delete question' do
+      sign_in_user
+      before do
+        @question = create(:question, user: @user)
+        sign_out(@user)
+        sign_in(create(:user))
+      end
+
+      it 'does not delete question' do
+        expect{ delete :destroy, params: { id: @question } }.to_not change(Question, :count)
+      end
+      it 'should redirect to questions' do
+        delete :destroy, params: { id: @question }
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 
@@ -121,6 +139,11 @@ RSpec.describe QuestionsController, type: :controller do
         post :create, params: { question: attributes_for(:question)}
         expect(response).to redirect_to question_path(assigns(:question))
       end
+
+      it 'associates new answer with current user' do
+        post :create, params: { question: attributes_for(:question) }
+        expect(assigns(:question).user).to eq subject.current_user
+      end      
     end
 
     context 'with invalid question' do

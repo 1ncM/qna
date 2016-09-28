@@ -8,11 +8,11 @@ feature 'Delete question', %q{
 
   given!(:user) { create(:user) }
   before(:each) do
-    sign_in(user)
     @question = create(:question, user: user)
   end
 
   scenario 'Autheticated user who asked the question delete it' do
+    sign_in(user)
     visit question_path(@question)
     expect(page).to have_content "Delete question"
     click_on "Delete question"
@@ -21,14 +21,12 @@ feature 'Delete question', %q{
   end
 
   scenario 'Authenticated user can not delete question asked by other user' do
-    sign_out
     sign_in(create(:user))
     visit question_path(@question)
     expect(page).to_not have_link 'Delete question'
   end
 
   scenario 'Non-authenticated user can not see the Delete question link' do
-    sign_out
     visit question_path(@question)
     expect(page).to_not have_link 'Delete question'
   end
