@@ -26,4 +26,13 @@ feature 'Delete answer', %q{
     visit question_path(@question)
     expect(page).to_not have_link 'Delete Answer'
   end
+
+  scenario 'Non-authenticated user can not delete answer' do
+    sign_out
+    visit question_path(@question)
+
+    within('.answers') do
+      expect(page).to have_no_link("Delete Answer", href: answer_path(@answer))
+    end
+  end
 end

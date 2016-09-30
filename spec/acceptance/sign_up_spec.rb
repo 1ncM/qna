@@ -12,7 +12,7 @@ feature 'User can sign up', %q{
     fill_in 'user_email', with: 'test@email.com'
     fill_in 'user_password', with: '12345678'
     fill_in 'user_password_confirmation', with: '12345678'
-    click_on 'Sign up'
+    click_button 'Sign up'
     expect(page).to have_content "You have signed up successfully."
   end
 
@@ -22,7 +22,7 @@ feature 'User can sign up', %q{
     fill_in 'user_email', with: 'my-test-email@gmail.com'
     fill_in 'user_password', with: '12345678'
     fill_in 'user_password_confirmation', with: 'password-does-not-match'
-    click_on 'Sign up'
+    click_button 'Sign up'
     expect(page).to have_content "Password confirmation doesn't match"
   end
 
@@ -32,7 +32,7 @@ feature 'User can sign up', %q{
     fill_in 'user_email', with: create(:user).email
     fill_in 'user_password', with: '11111111'
     fill_in 'user_password_confirmation', with: '11111111'
-    click_on 'Sign up'
+    click_button 'Sign up'
     expect(page).to have_content "Email has already been taken"
   end
 end
