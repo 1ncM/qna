@@ -14,6 +14,7 @@ feature 'Write answer for question', %{
     visit question_path(question)
     fill_in 'answer_body', with: 'Text text'
     click_on 'Post Your Answer'
+    expect(current_path).to eq question_path(question)
     within '.answers' do
       expect(page).to have_content('Text text')
     end
