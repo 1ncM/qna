@@ -6,18 +6,16 @@ feature 'Create question', %{
   I want to be able to ask questions
 } do
   
-  given(:user) { create(:user) }
-
   scenario 'Authenticated user creates question' do
-    sign_in(user)
+    sign_in create(:user)
 
     visit questions_path
     click_on 'Ask question'
-    fill_in 'Title', with: 'Test question'
-    fill_in 'Body', with: 'Text text'
+    fill_in 'question_title', with: 'Test question'
+    fill_in 'question_body', with: 'Text body'
     click_on 'Create'
     expect(page).to have_content "Test question"
-    expect(page).to have_content "Text text"
+    expect(page).to have_content "Text body"
   end
 
   scenario 'Non-Authenticated user creates question' do

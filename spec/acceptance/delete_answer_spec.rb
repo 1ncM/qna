@@ -6,7 +6,7 @@ feature 'Delete answer', %q{
   I want to be able to delete my answer
 } do
 
-  let!(:user) { create(:user) }
+  given!(:user) { create(:user) }
   before(:each) do
     sign_in(user)
     @question = create(:question, user: user)
@@ -29,8 +29,8 @@ feature 'Delete answer', %q{
 
   scenario 'Non-authenticated user can not delete answer' do
     sign_out
+    sign_in(create(:user))
     visit question_path(@question)
-
     within('.answers') do
       expect(page).to have_no_link("Delete Answer", href: answer_path(@answer))
     end
